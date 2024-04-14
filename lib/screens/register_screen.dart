@@ -7,50 +7,94 @@ class RegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    final GlobalKey<FormState> myFormKey = GlobalKey<FormState>();
+
+    final Map<String, String> formValues = {
+      'first_name': 'Tony',
+      'last_name': 'Vasquez',
+      'user' : 'tonyva',
+      'phone' : '809-342-5016',
+      'email': 'tonyva002@hotmail.com',
+      'password': '123456',
+      'role': 'Admin'
+    };
+
     return Scaffold(
         appBar: AppBar(
           title: Text('Registro'),
         ),
-        body: const SingleChildScrollView(
+        body: SingleChildScrollView(
             child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Form(
+                  key: myFormKey,
                   child: Column(
                     children: [
                       SizedBox(height: 30),
                       CustomInputField(
                         labelText: 'Correo',
                         hintText: 'Correo del usuario',
-                        emailAddress: TextInputType.emailAddress,
-                      ),
+                        emailAddress: TextInputType.emailAddress, formProperty: 'email', formValues: formValues),
                       SizedBox(height: 30),
                       CustomInputField(
                         labelText: 'Contraseña',
                         hintText: 'Contraseña del usuario',
-                        obscureText: true,
+                        obscureText: true, formProperty: 'password', formValues: formValues
                       ),
                       SizedBox(height: 30),
                       CustomInputField(
                         labelText: 'Usuario',
                         hintText: 'Usuario',
-                        obscureText: true,
+                        obscureText: true,formProperty: 'user', formValues: formValues
                       ),
                       SizedBox(height: 30),
                       CustomInputField(
-                          labelText: 'Nombre', hintText: 'Nombre del usuario'),
+                          labelText: 'Nombre', hintText: 'Nombre del usuario', formProperty: 'first_name', formValues: formValues),
                       SizedBox(height: 30),
                       CustomInputField(
                           labelText: 'Apellido',
-                          hintText: 'Apellido del usuario'),
+                          hintText: 'Apellido del usuario', formProperty: 'last_name', formValues: formValues),
                       SizedBox(height: 30),
                       CustomInputField(
                         labelText: 'Telefono',
-                        hintText: 'Telefono del usuario',
-                        obscureText: true,
+                        hintText: 'Telefono del usuario', formProperty: 'phone', formValues: formValues
                       ),
                       SizedBox(height: 30),
 
-                      CustomButton(buttonText: "Guardar",),
+                    DropdownButtonFormField(
+                      value: 'Admin',
+                        items: [
+                          DropdownMenuItem(value: 'Admin',child: Text('Admin')),
+                          DropdownMenuItem(value: 'Superuser',child: Text('Superuser')),
+                          DropdownMenuItem(value: 'Developer',child: Text('Developer')),
+                          DropdownMenuItem(value: 'Jr. Developer',child: Text('Jr. Developer')),
+                        ],
+                        onChanged: (value){
+                        print(value);
+                        formValues['role'] = value ?? 'Admin';
+                        }),
+
+                      SizedBox(height: 30),
+                    ElevatedButton(
+                      child: SizedBox(
+                        child: Center(child: Text('Guardar')),
+                        width: double.infinity,
+                      ),
+                      style: ButtonStyle(
+                        fixedSize: MaterialStateProperty.all(
+                            Size.fromHeight(50)), // Altura deseada del botón
+                      ),
+                      onPressed: () {
+                        FocusScope.of(context).requestFocus(FocusNode());
+
+                        if(!myFormKey.currentState!.validate()){
+                          print('Formulario no valido');
+                          return;
+                        }
+                        print(formValues);
+                      },
+                    ),
+
                       SizedBox(height: 30),
 
                     ],

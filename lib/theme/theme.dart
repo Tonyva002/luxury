@@ -1,14 +1,16 @@
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AppTheme {
   static const Color primary = Colors.red;
-  static const Color secundary = Colors.white;
+  static const Color white = Colors.white;
   static const Color gris = Colors.grey;
 
   // Light Theme
   static final ThemeData lightTheme = ThemeData.light().copyWith(
+
+    // Color de fondo
+    scaffoldBackgroundColor: Colors.grey[300],
 
     // Color primario
     primaryColor: Colors.indigo,
@@ -19,7 +21,7 @@ class AppTheme {
       elevation: 0,
       titleTextStyle:
         TextStyle(
-          color: secundary,
+          color: white,
           fontSize: 25
         )
     ),
@@ -28,9 +30,9 @@ class AppTheme {
   //ElevatedButtons
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        foregroundColor: secundary,
+        foregroundColor: white,
         shape: const StadiumBorder(),
-        shadowColor: secundary,
+        shadowColor: white,
         backgroundColor: primary
 
       ),
