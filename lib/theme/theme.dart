@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  static const Color primary = Colors.red;
+  static const Color primary = Colors.indigo;
   static const Color white = Colors.white;
   static const Color gris = Colors.grey;
 
