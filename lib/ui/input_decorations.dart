@@ -1,5 +1,4 @@
 
-
 import 'package:flutter/material.dart';
 
 class InputDecorations{
@@ -10,8 +9,8 @@ class InputDecorations{
     IconData? prefixIcon
 }){
     return  InputDecoration(
-        enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(
+         enabledBorder: UnderlineInputBorder(
+           borderSide: BorderSide(
                 color: Colors.deepPurple
             )
         ),
@@ -33,13 +32,30 @@ class InputDecorations{
   }
 
 
+  static InputDecoration authInputDecoration2({
+    required String hintText,
+    required String labelText,
+    IconData? prefixIcon
+  }){
+    return  InputDecoration(
+        hintText: hintText,
+        labelText: labelText,
+        labelStyle: TextStyle(
+            color: Colors.grey
+        ),
+        prefixIcon: prefixIcon != null
+            ? Icon(prefixIcon, color: Colors.deepPurple)
+            : null
+    );
+  }
+
+
 
   static TextFormField authTextFormField({
     required String labelText,
     required String hintText,
     final String? helperText,
-    final IconData? icon,
-    final IconData? suffixIcon,
+    final IconData? prefixIcon,
     final TextInputType? emailAddress,
     final bool obscureText = false,
 
@@ -57,14 +73,21 @@ class InputDecorations{
       validator: (value) {
         if (value == null) return "Requerido";
         return value.length < 3 ? "Minimo 3 letras" : null;
+
+
       },
       autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
         labelText: labelText,
+        labelStyle: TextStyle(
+            color: Colors.grey
+        ),
         hintText: hintText,
         helperText: helperText,
-        suffixIcon: suffixIcon == null ? null : Icon(suffixIcon),
-        icon: icon == null ? null : Icon(icon),
+
+          prefixIcon: prefixIcon != null
+              ? Icon(prefixIcon, color: Colors.deepPurple)
+              : null
       ),
     );
   }
