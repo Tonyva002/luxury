@@ -5,9 +5,10 @@ import '../models/models.dart';
 
 
 class AppRoutes {
-  static const initialRoute = "login";
+  static const initialRoute = "checking";
 
   static final menuOptions = <MenuOption>[
+    MenuOption(route: "checking", name: "Check auth", screen: CheckAuthScreen(), icon: Icons.supervised_user_circle_outlined),
     MenuOption(route: "login", name: "Login", screen: const LoginScreen(), icon: Icons.supervised_user_circle_outlined),
     MenuOption(route: "register", name: "Register", screen: const RegisterScreen(), icon: Icons.app_registration_outlined),
     MenuOption(route: "home", name: "Home", screen: const HomeScreen(), icon: Icons.home_sharp)

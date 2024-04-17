@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:luxury/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
+import 'package:luxury/services/services.dart';
 import '../providers/login_form_provider.dart';
 import '../ui/input_decorations.dart';
 
@@ -10,17 +10,6 @@ class RegisterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   /* final GlobalKey<FormState> myFormKey = GlobalKey<FormState>();
-
-    final Map<String, String> formValues = {
-      'first_name': '',
-      'last_name': '',
-      'user': '',
-      'phone': '',
-      'email': '',
-      'password': '',
-
-    };*/
 
     return Scaffold(
         appBar: AppBar(
@@ -28,125 +17,14 @@ class RegisterScreen extends StatelessWidget {
         ),
         body: SingleChildScrollView(
             child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                child:   ChangeNotifierProvider(
-                  create: (_) => LoginFormProvider(),
-                  child: _LoginForm(),
-                ),
-    )
-    )
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: ChangeNotifierProvider(
+                create: (_) => LoginFormProvider(),
+                child: _LoginForm(),
+              ),
+            )
+        )
     );
-
-         /*       Form(
-                  key: myFormKey,
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 30),
-                      InputDecorations.authTextFormField(
-                          labelText: 'Nombre',
-                          hintText: 'Nombre del usuario',
-                          formProperty: 'first_name',
-                          formValues: formValues),
-                      const SizedBox(height: 30),
-                      InputDecorations.authTextFormField(
-                          labelText: 'Apellido',
-                          hintText: 'Apellido del usuario',
-                          formProperty: 'last_name',
-                          formValues: formValues),
-                      const SizedBox(height: 30),
-                      InputDecorations.authTextFormField(
-                          labelText: 'Telefono',
-                          hintText: 'Telefono del usuario',
-                          formProperty: 'phone',
-                          formValues: formValues),
-                      const SizedBox(height: 30),
-                      InputDecorations.authTextFormField(
-                          labelText: 'Correo',
-                          hintText: 'Correo del usuario',
-                          emailAddress: TextInputType.emailAddress,
-                          formProperty: 'email',
-                          formValues: formValues),
-                      const SizedBox(height: 30),
-                      InputDecorations.authTextFormField(
-                          labelText: 'Usuario',
-                          hintText: 'Usuario',
-                          obscureText: true,
-                          formProperty: 'user',
-                          formValues: formValues),
-                      const SizedBox(height: 30),
-                      InputDecorations.authTextFormField(
-                          labelText: 'Contraseña',
-                          hintText: 'Contraseña del usuario',
-                          obscureText: true,
-                          formProperty: 'password',
-                          formValues: formValues),
-                      const SizedBox(height: 30),
-
-                      ElevatedButton(
-                        style: ButtonStyle(
-                          fixedSize: MaterialStateProperty.all(
-                              const Size.fromHeight(50)), // Altura deseada del botón
-                        ),
-                        onPressed: () {
-                          FocusScope.of(context).requestFocus(FocusNode());
-
-                          if (!myFormKey.currentState!.validate()) {
-                            print('Formulario no valido');
-                            return;
-                          }
-                          print(formValues);
-                        },
-                        child: const SizedBox(
-                          child: Center(child: Text('Guardar')),
-                          width: double.infinity,
-                        ),
-                      ),
-
-                             MaterialButton(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)),
-                disabledColor: Colors.grey,
-                elevation: 0,
-                color: Colors.deepPurple,
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15),
-                  child: Text('Guardar',style: TextStyle(color: Colors.white),
-                  ),
-                ),
-                onPressed: loginForm.isLoading
-                    ? null
-                    : () async {
-                        FocusScope.of(context).unfocus();
-                        if (!loginForm.isValidForm()) return;
-                        loginForm.isLoading = true;
-
-                        await Future.delayed(Duration(seconds: 2));
-
-                        //TODO validar si el login es correcto
-                        loginForm.isLoading = false;
-
-                        Navigator.pushReplacementNamed(context, 'home');
-                      })
-
-
-
-                      const SizedBox(height: 30),
-
-                      TextButton(
-                        onPressed: () => Navigator.pushReplacementNamed(context, 'login'),
-                        style: ButtonStyle(
-                            overlayColor: MaterialStateProperty.all(Colors.indigo.withOpacity(0.1)),
-                            shape: MaterialStateProperty.all(StadiumBorder())
-                        ),
-                        child: const Text(
-                          'Ya tienes una cuenta?',
-                          style: TextStyle(fontSize: 18, color: Colors.black87),
-                        ),
-                      ),
-                      const SizedBox(height: 30),
-                    ],
-                  ),
-                ))));*/
   }
 }
 
@@ -251,15 +129,22 @@ class _LoginForm extends StatelessWidget {
                     ? null
                     : () async {
                   FocusScope.of(context).unfocus();
+                  final authService = Provider.of<AuthService>(context, listen: false);
+
                   if (!loginForm.isValidForm()) return;
+
                   loginForm.isLoading = true;
 
-                  await Future.delayed(Duration(seconds: 2));
-
                   //TODO validar si el login es correcto
-                  loginForm.isLoading = false;
+                  final String? errorMessage = await authService.createrUser(loginForm.email, loginForm.password);
 
-                  Navigator.pushReplacementNamed(context, 'home');
+                  if(errorMessage == null){
+                    Navigator.pushReplacementNamed(context, 'home');
+                  } else {
+                    print(errorMessage);
+                    loginForm.isLoading = false;
+                  }
+
                 }
                 ),
 

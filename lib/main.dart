@@ -1,9 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:luxury/router/routes.dart';
+import 'package:luxury/services/auth_service.dart';
 import 'package:luxury/theme/theme.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp( AppState());
+}
+
+class AppState extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+   return MultiProvider(
+       providers: [
+         ChangeNotifierProvider(create: ( _ ) => AuthService()),
+         
+       ],
+     child: MyApp(),
+   );
+  }
+  
 }
 
 class MyApp extends StatelessWidget {
