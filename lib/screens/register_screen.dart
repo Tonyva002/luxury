@@ -53,19 +53,22 @@ class _LoginForm extends StatelessWidget {
                 labelText: 'Nombre',
                 hintText: 'Nombre del usuario',
                 formProperty: 'first_name',
-                formValues: formValues),
+                formValues: formValues,
+            prefixIcon: Icons.supervised_user_circle_rounded),
             const SizedBox(height: 30),
             InputDecorations.authTextFormField(
                 labelText: 'Apellido',
                 hintText: 'Apellido del usuario',
                 formProperty: 'last_name',
-                formValues: formValues),
+                formValues: formValues,
+            prefixIcon: Icons.supervised_user_circle),
             const SizedBox(height: 30),
             InputDecorations.authTextFormField(
                 labelText: 'Telefono',
                 hintText: 'Telefono del usuario',
                 formProperty: 'phone',
-                formValues: formValues),
+                formValues: formValues,
+            prefixIcon: Icons.phone),
             const SizedBox(height: 30),
 
             InputDecorations.authTextFormField(
@@ -73,7 +76,8 @@ class _LoginForm extends StatelessWidget {
                 hintText: 'Usuario',
                 obscureText: true,
                 formProperty: 'user',
-                formValues: formValues),
+                formValues: formValues,
+                prefixIcon: Icons.supervised_user_circle_outlined),
             const SizedBox(height: 30),
 
 
@@ -81,7 +85,7 @@ class _LoginForm extends StatelessWidget {
               autocorrect: false,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecorations.authInputDecoration2(
-                  hintText: 'tony.do@gmail.com',
+                  hintText: 't...do@gmail.com',
                   labelText: 'Correo electronico',
                   prefixIcon: Icons.alternate_email_rounded),
               onChanged: (value) => loginForm.email = value,
@@ -101,7 +105,7 @@ class _LoginForm extends StatelessWidget {
               obscureText: true,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecorations.authInputDecoration2(
-                  hintText: '*****',
+                  hintText: '***....',
                   labelText: 'Contraseña',
                   prefixIcon: Icons.lock_outline),
               onChanged: (value) => loginForm.password = value,
@@ -141,7 +145,7 @@ class _LoginForm extends StatelessWidget {
                   if(errorMessage == null){
                     Navigator.pushReplacementNamed(context, 'home');
                   } else {
-                    print(errorMessage);
+                    NotificationsService.showSnackbar('Usuario ya existe');
                     loginForm.isLoading = false;
                   }
 

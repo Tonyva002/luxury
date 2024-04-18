@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:luxury/router/routes.dart';
 import 'package:luxury/services/auth_service.dart';
+import 'package:luxury/services/services.dart';
 import 'package:luxury/theme/theme.dart';
 import 'package:provider/provider.dart';
 
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
       initialRoute: AppRoutes.initialRoute,
       routes: AppRoutes.getAppRoutes(),
       theme: AppTheme.lightTheme,
+      scaffoldMessengerKey: NotificationsService.messengerKey,
 
     );
   }

@@ -68,7 +68,7 @@ class _LoginForm extends StatelessWidget {
               autocorrect: false,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecorations.authInputDecoration(
-                  hintText: 'tony.do@gmail.com',
+                  hintText: 't...do@gmail.com',
                   labelText: 'Correo electronico',
                   prefixIcon: Icons.alternate_email_rounded),
               onChanged: (value) => loginForm.email = value,
@@ -88,7 +88,7 @@ class _LoginForm extends StatelessWidget {
               obscureText: true,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecorations.authInputDecoration(
-                  hintText: '*****',
+                  hintText: '***....',
                   labelText: 'Contraseña',
                   prefixIcon: Icons.lock_outline),
               onChanged: (value) => loginForm.password = value,
@@ -101,17 +101,11 @@ class _LoginForm extends StatelessWidget {
             const SizedBox(height: 30),
             MaterialButton(
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)),
+                    borderRadius: BorderRadius.circular(10)
+                ),
                 disabledColor: Colors.grey,
                 elevation: 0,
                 color: Colors.deepPurple,
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15),
-                  child: Text(
-                    loginForm.isLoading ? 'Espere...' : 'Ingresar',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
                 onPressed: loginForm.isLoading
                     ? null
                     : () async {
@@ -128,11 +122,18 @@ class _LoginForm extends StatelessWidget {
                         if(errorMessage == null){
                           Navigator.pushReplacementNamed(context, 'home');
                         } else {
-                          print(errorMessage);
+                          NotificationsService.showSnackbar('Usuario y contraseña invalida');
                           loginForm.isLoading = false;
                         }
 
-                })
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15),
+                  child: Text(
+                    loginForm.isLoading ? 'Espere...' : 'Ingresar',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ))
           ],
         ),
       ),
