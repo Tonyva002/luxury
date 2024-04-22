@@ -22,7 +22,7 @@ This application allows you to register a user, log in and log out, and also all
 - Step 2. Unzip the file if you have downloaded it
 - Step 3. Open it in Android Studio
 - Step 4. Install Dart and Flutter in the Android Studio (File - setting - plugins). You can also install flutter on your pc.
-- 📌 Live site URL: [here](https://docs.flutter.dev/get-started/install)
+- 📌 Download Flutter URL: [here](https://docs.flutter.dev/get-started/install)
 - Step 5. Connect your physical phone to the pc.  Remember to activate in (settings - developer options - USB debugging).
 - Step 6. Give it to run
 - Step 7. Register in the application
