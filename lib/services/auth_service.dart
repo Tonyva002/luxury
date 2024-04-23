@@ -9,6 +9,8 @@ class AuthService extends ChangeNotifier {
   final String _firebaseToken = 'AIzaSyCy0LLbGe3X_cAMAzV6-jVaEaPD9QEWpd0';
   final storage = const FlutterSecureStorage();
 
+
+  //Crear usuario
   Future<String?> createrUser(String email, String password) async {
     final Map<String, dynamic> authData = {
       'email': email,
@@ -30,7 +32,7 @@ class AuthService extends ChangeNotifier {
       return decoderResp['error']['message'];
     }
   }
-
+  //Validar correo y contraseña
   Future<String?> login(String email, String password) async {
     final Map<String, dynamic> authData = {
       'email': email,
@@ -52,7 +54,7 @@ class AuthService extends ChangeNotifier {
       return decoderResp['error']['message'];
     }
   }
-
+  // Cerrar sesion
   Future logout() async {
     // Delete value
     await storage.delete(key: 'token');

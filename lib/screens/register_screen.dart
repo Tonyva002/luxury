@@ -20,7 +20,7 @@ class RegisterScreen extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: ChangeNotifierProvider(
                 create: (_) => LoginFormProvider(),
-                child: _LoginForm(),
+                child: _LoginForm(),  // Llamada al formulario
               ),
             )
         )
@@ -28,6 +28,8 @@ class RegisterScreen extends StatelessWidget {
   }
 }
 
+
+//Clase privada para el formulario
 class _LoginForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -49,28 +51,40 @@ class _LoginForm extends StatelessWidget {
         autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Column(
           children: [
+            //Componente del nombre el usuario
             InputDecorations.authTextFormField(
                 labelText: 'Nombre',
                 hintText: 'Nombre del usuario',
                 formProperty: 'first_name',
                 formValues: formValues,
             prefixIcon: Icons.supervised_user_circle_rounded),
+
+            // Espacio entre los componentes
             const SizedBox(height: 30),
+
+            //Componente del apellido del usuario
             InputDecorations.authTextFormField(
                 labelText: 'Apellido',
                 hintText: 'Apellido del usuario',
                 formProperty: 'last_name',
                 formValues: formValues,
             prefixIcon: Icons.supervised_user_circle),
+
+            // Espacio entre los componentes
             const SizedBox(height: 30),
+
+            //Componente del telefono del usuario
             InputDecorations.authTextFormField(
                 labelText: 'Telefono',
                 hintText: 'Telefono del usuario',
                 formProperty: 'phone',
                 formValues: formValues,
             prefixIcon: Icons.phone),
+
+            // Espacio entre los componentes
             const SizedBox(height: 30),
 
+            //Componente del usuario
             InputDecorations.authTextFormField(
                 labelText: 'Usuario',
                 hintText: 'Usuario',
@@ -78,9 +92,11 @@ class _LoginForm extends StatelessWidget {
                 formProperty: 'user',
                 formValues: formValues,
                 prefixIcon: Icons.supervised_user_circle_outlined),
+
+            // Espacio entre los componentes
             const SizedBox(height: 30),
 
-
+            //Componente del correo del usuario
             TextFormField(
               autocorrect: false,
               keyboardType: TextInputType.emailAddress,
@@ -99,7 +115,11 @@ class _LoginForm extends StatelessWidget {
                     : 'Agregue un correo valido';
               },
             ),
+
+            // Espacio entre los componentes
             const SizedBox(height: 30),
+
+            //Componente de la contraseña del usuario
             TextFormField(
               autocorrect: false,
               obscureText: true,
@@ -115,7 +135,11 @@ class _LoginForm extends StatelessWidget {
                     : 'La contraseña debe ser de 6 o mas caracteres';
               },
             ),
+
+            // Espacio entre los componentes
             const SizedBox(height: 30),
+
+            // Si se registro correctamente navegar a la pantalla de home, de lo contrario muestra un mensaje de usuario ya existe
             MaterialButton(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10)),
@@ -152,8 +176,10 @@ class _LoginForm extends StatelessWidget {
                 }
                 ),
 
+            // Espacio entre los componentes
             const SizedBox(height: 30),
 
+           // Si ya tienes cuenta puedes volver al login
             TextButton(
               onPressed: () => Navigator.pushReplacementNamed(context, 'login'),
               style: ButtonStyle(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// clase background login
 class AuthBackground extends StatelessWidget {
   final Widget child;
 

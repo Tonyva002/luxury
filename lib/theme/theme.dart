@@ -39,9 +39,6 @@ class AppTheme {
         backgroundColor: primary
 
       ),
-     /* style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all<Color>(Colors.blue), // Color del botón
-      ),*/
     ),
 
       // InputDecorationTheme

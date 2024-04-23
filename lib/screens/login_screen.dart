@@ -28,12 +28,16 @@ class LoginScreen extends StatelessWidget {
                   const SizedBox(height: 30),
                   ChangeNotifierProvider(
                     create: (_) => LoginFormProvider(),
-                    child: _LoginForm(),
+                    child: _LoginForm(),  // Llamada al formulario
                   ),
                 ],
               ),
             ),
+
+            // Espacio entre los componentes
             const SizedBox(height: 50),
+
+            //Crear una nueva cuenta
             TextButton(
                 onPressed: () => Navigator.pushReplacementNamed(context, 'register'),
                 style: ButtonStyle(
@@ -53,6 +57,7 @@ class LoginScreen extends StatelessWidget {
   }
 }
 
+//Clase privada para el formulario
 class _LoginForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -64,6 +69,7 @@ class _LoginForm extends StatelessWidget {
         autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Column(
           children: [
+            //Componente del correo del usuario
             TextFormField(
               autocorrect: false,
               keyboardType: TextInputType.emailAddress,
@@ -82,7 +88,11 @@ class _LoginForm extends StatelessWidget {
                     : 'Agregue un correo valido';
               },
             ),
+
+            // Espacio entre los componentes
             const SizedBox(height: 30),
+
+            //Componente de la contraseña del usuario
             TextFormField(
               autocorrect: false,
               obscureText: true,
@@ -98,7 +108,11 @@ class _LoginForm extends StatelessWidget {
                     : 'La contraseña debe ser de 6 o mas caracteres';
               },
             ),
+
+            // Espacio entre los componentes
             const SizedBox(height: 30),
+
+            // Si el usuario y contraseña es correcto ir a la pantalla de home, de lo contrario mostrar mensaje Usuario y contraseña invalida
             MaterialButton(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10)

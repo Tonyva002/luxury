@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class InputDecorations{
 
+  //Componente usuario y contraseña login
   static InputDecoration authInputDecoration({
     required String hintText,
     required String labelText,
@@ -31,7 +32,7 @@ class InputDecorations{
     );
   }
 
-
+//Componente usuario y contraseña registro
   static InputDecoration authInputDecoration2({
     required String hintText,
     required String labelText,
@@ -50,7 +51,7 @@ class InputDecorations{
   }
 
 
-
+  //Componente TextFormField
   static TextFormField authTextFormField({
     required String labelText,
     required String hintText,

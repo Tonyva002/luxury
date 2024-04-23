@@ -5,8 +5,10 @@ import '../models/models.dart';
 
 
 class AppRoutes {
+  // ruta iniciar
   static const initialRoute = "checking";
 
+  // rota para navegar
   static final menuOptions = <MenuOption>[
     MenuOption(route: "checking", name: "Check auth", screen: CheckAuthScreen(), icon: Icons.supervised_user_circle_outlined),
     MenuOption(route: "login", name: "Login", screen: const LoginScreen(), icon: Icons.supervised_user_circle_outlined),

@@ -8,6 +8,14 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+  /*  FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+    if (result != null) {
+      File file = File(result.files.single.path!);
+    } else {
+      // User canceled the picker
+    }*/
+
     final authService = Provider.of<AuthService>(context, listen: false);
 
    return Scaffold(
@@ -16,7 +24,7 @@ class HomeScreen extends StatelessWidget {
        leading: IconButton(
          icon: Icon(Icons.login_outlined),
          onPressed: (){
-           authService.logout();
+           authService.logout(); // Cerrar sesion
            Navigator.pushReplacementNamed(context, 'login');
 
          },

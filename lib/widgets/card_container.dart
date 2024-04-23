@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// Clase para la tarjeta del login
 class CardContainer extends StatelessWidget {
   final Widget child;
 

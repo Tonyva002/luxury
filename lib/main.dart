@@ -30,12 +30,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Luxury',
+      title: 'Luxury',                         // Titulo de la App
       debugShowCheckedModeBanner: false,
-      initialRoute: AppRoutes.initialRoute,
-      routes: AppRoutes.getAppRoutes(),
-      theme: AppTheme.lightTheme,
-      scaffoldMessengerKey: NotificationsService.messengerKey,
+      initialRoute: AppRoutes.initialRoute,   // Ruta iniciar de la App
+      routes: AppRoutes.getAppRoutes(),       // Rutas de la App
+      theme: AppTheme.lightTheme,             // Tema de la App
+      scaffoldMessengerKey: NotificationsService.messengerKey,   // Mensaje de la App
 
     );
   }
