@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:luxury/services/services.dart';
 import 'package:provider/provider.dart';
@@ -7,14 +10,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-  /*  FilePickerResult? result = await FilePicker.platform.pickFiles();
-
-    if (result != null) {
-      File file = File(result.files.single.path!);
-    } else {
-      // User canceled the picker
-    }*/
 
     final authService = Provider.of<AuthService>(context, listen: false);
 
@@ -30,15 +25,82 @@ class HomeScreen extends StatelessWidget {
          },
        ),
      ),
-     body: Container(
-       child: Column(
-         children: [
-           Text('Home Screen', style: TextStyle(fontSize: 25),)
-         ],
-       ),
+     body: Container(child: _FilesApp()),
 
-     ),
+
    );
   }
 
 }
+
+class _FilesApp extends StatefulWidget {
+
+  _FilesAppState createState() => _FilesAppState();
+
+}
+
+class _FilesAppState extends State<_FilesApp>{
+
+  FilePickerResult? result;
+  String? _fileName;
+  PlatformFile? pickefile;
+  bool isLoading = false;
+  File? fileToDisplay;
+
+  void addFile() async{
+    try{
+      setState(() {
+        isLoading = true;
+      });
+
+      result = await FilePicker.platform.pickFiles(
+        type: FileType.any,
+       // allowedExtensions: ['jpg','png', 'pdf'],
+        allowMultiple: false,
+
+      );
+      if(result != null){
+        _fileName = result!.files.first.name;
+        pickefile = result!.files.first;
+        fileToDisplay = File(pickefile!.path.toString());
+
+        print('File name $_fileName');
+        print('file path $fileToDisplay');
+      }
+
+      setState(() {
+        isLoading = false;
+      });
+
+    }catch(e){
+      print(e);
+    }
+
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Center(
+          child: isLoading
+              ? CircularProgressIndicator()
+          : TextButton(
+              onPressed: () {
+                addFile();
+              },
+              child: Text('Add File')),
+        ),
+        if(pickefile != null)
+          SizedBox(
+            height: 300, width: 400, child: Image.file(fileToDisplay!)),
+      ],
+
+    );
+  }
+
+}
+
