@@ -5,41 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:luxury/services/services.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  State<HomeScreen> createState() => _FilesAppState();
 
-    final authService = Provider.of<AuthService>(context, listen: false);
-
-   return Scaffold(
-     appBar: AppBar(
-       title: Text('Home'),
-       leading: IconButton(
-         icon: Icon(Icons.login_outlined),
-         onPressed: (){
-           authService.logout(); // Cerrar sesion
-           Navigator.pushReplacementNamed(context, 'login');
-
-         },
-       ),
-     ),
-     body: Container(child: _FilesApp()),
-
-
-   );
-  }
 
 }
 
-class _FilesApp extends StatefulWidget {
 
-  _FilesAppState createState() => _FilesAppState();
-
-}
-
-class _FilesAppState extends State<_FilesApp>{
+class _FilesAppState extends State<HomeScreen>{
 
   FilePickerResult? result;
   String? _fileName;
@@ -79,25 +55,71 @@ class _FilesAppState extends State<_FilesApp>{
   }
 
 
+ /* void uploadFileToTangle(String filePath) async {
+    // Leer el archivo
+    List<int> fileBytes = File(filePath).readAsBytesSync();
+
+    // Convertir los bytes del archivo en una cadena para almacenarlos en una transacción IOTA
+    String fileData = fileBytes.toString();
+
+    // Inicializar la conexión a un nodo de la red Tangle
+    final iota = Iota(provider: 'https://nodes.iota.org:443');
+
+    // Crear una transacción con los datos del archivo
+    final transaction = await iota.composeTransaction(
+      outputs: [
+        TransferOutput(
+          address: IotaAddress.random(),
+          value: 0,
+          message: fileData,
+        )
+      ],
+    );
+
+    // Enviar la transacción a la red Tangle
+    final response = await iota.sendTrytes(transaction: transaction);
+
+    // Manejar la respuesta (por ejemplo, imprimir la transacción)
+    print('Transacción enviada: ${response.success}');
+  }*/
+
+
   @override
   Widget build(BuildContext context) {
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Center(
-          child: isLoading
-              ? CircularProgressIndicator()
-          : TextButton(
-              onPressed: () {
-                addFile();
-              },
-              child: Text('Add File')),
+    final authService = Provider.of<AuthService>(context, listen: false);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Home'),
+        leading: IconButton(
+          icon: Icon(Icons.login_outlined),
+          onPressed: (){
+            authService.logout(); // Cerrar sesion
+            Navigator.pushReplacementNamed(context, 'login');
+
+          },
         ),
-        if(pickefile != null)
-          SizedBox(
-            height: 300, width: 400, child: Image.file(fileToDisplay!)),
-      ],
+      ),
+      body: Container(child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+            child: isLoading
+                ? CircularProgressIndicator()
+                : TextButton(
+                onPressed: () {
+                  addFile();
+                },
+                child: Text('Add File')),
+          ),
+          if(pickefile != null)
+            SizedBox(
+                height: 300, width: 400, child: Image.file(fileToDisplay!)),
+        ],
+
+      ),
+      ),
 
     );
   }
