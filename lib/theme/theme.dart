@@ -1,4 +1,5 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AppTheme {
@@ -10,7 +11,9 @@ class AppTheme {
   static final ThemeData lightTheme = ThemeData.light().copyWith(
 
     // Color de fondo
-    scaffoldBackgroundColor: Colors.grey[300],
+    scaffoldBackgroundColor: CupertinoColors.systemGroupedBackground,
+    //scaffoldBackgroundColor: Colors.grey[300],
+
 
     // Color primario
     primaryColor: Colors.indigo,
@@ -41,6 +44,13 @@ class AppTheme {
       ),
     ),
 
+      floatingActionButtonTheme: const FloatingActionButtonThemeData (
+        elevation: 0,
+        backgroundColor: primary,
+        shape: StadiumBorder(),
+
+      ),
+
       // InputDecorationTheme
     inputDecorationTheme: const InputDecorationTheme(
       floatingLabelStyle: TextStyle(color: primary),
@@ -53,7 +63,8 @@ class AppTheme {
 
       )
 
-  )
+  ),
+
 
   );
 }

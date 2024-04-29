@@ -1,21 +1,140 @@
-import 'dart:io';
 
-import 'package:file_picker/file_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:luxury/services/services.dart';
+import 'package:luxury/screens/editing_file_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
+
+import 'package:luxury/services/services.dart';
+import '../models/models.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _FilesAppState();
+  State<HomeScreen> createState() => _HomeScreenState();
 
 
 }
 
 
-class _FilesAppState extends State<HomeScreen>{
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<FileData>(context, listen: false).initializeList();
+  }
+
+  // create a new file
+  void createNewFile() {
+    // create a blank file
+    var uuid = const Uuid();
+    String id = uuid.v4();
+    String tag = '';
+    String text = '';
+    String blockId = '';
+    File newFile = File(id: id, tag: tag, text: text, blockId: blockId);
+
+    // Navigate to edit the file
+    goToFileScreen(newFile, true);
+  }
+
+  // method to navigate to file editing
+  void goToFileScreen(File file, bool isNewFile) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EditingFileScreen(file: file, isNewFile: isNewFile),
+      ),
+    );
+  }
+
+  // delete file
+  void deleteFile(File file) {
+    Provider.of<FileData>(context, listen: false).deleteFile(file);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+    final authService = Provider.of<AuthService>(context, listen: false);
+
+    return Consumer<FileData>(
+      builder: (context, value, child) => Scaffold(
+        appBar: AppBar(
+          title: const Text('Home'),
+          leading: IconButton(
+            icon: Icon(Icons.login_outlined),
+            onPressed: (){
+              authService.logout(); // Sign off
+              Navigator.pushReplacementNamed(context, 'login');
+
+            },
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: createNewFile,
+          child: const Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              //heading
+              const Padding(
+                padding: EdgeInsets.only(left: 38.0, top: 25),
+                child: Text(
+                  'My Files',
+                  style: TextStyle(fontSize: 22),
+                ),
+              ),
+
+              // file list
+              value.getAllFiles().isEmpty
+                  ? const Padding(
+                padding: EdgeInsets.only(top: 50.0),
+                child: Center(
+                  child: Text(
+                    'Nothing here...',
+                    style: TextStyle(
+                      color: Colors.grey,
+                    ),
+                  ),
+                ),
+              )
+                  : CupertinoListSection.insetGrouped(
+                backgroundColor: Colors.transparent,
+                children: List.generate(
+                  value.getAllFiles().length,
+                      (index) => CupertinoListTile(
+                    title: Text(value.getAllFiles()[index].text),
+                    subtitle: Text(value.getAllFiles()[index].tag),
+                    //additionalInfo: Text(value.getAllNotes()[index].tag),
+                    onTap: () =>
+                        goToFileScreen(value.getAllFiles()[index], false),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.arrow_forward),
+                      onPressed: () => {
+                        goToFileScreen(value.getAllFiles()[index], false)
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+/*class _FilesAppState extends State<HomeScreen>{
 
   FilePickerResult? result;
   String? _fileName;
@@ -54,34 +173,6 @@ class _FilesAppState extends State<HomeScreen>{
 
   }
 
-
- /* void uploadFileToTangle(String filePath) async {
-    // Leer el archivo
-    List<int> fileBytes = File(filePath).readAsBytesSync();
-
-    // Convertir los bytes del archivo en una cadena para almacenarlos en una transacción IOTA
-    String fileData = fileBytes.toString();
-
-    // Inicializar la conexión a un nodo de la red Tangle
-    final iota = Iota(provider: 'https://nodes.iota.org:443');
-
-    // Crear una transacción con los datos del archivo
-    final transaction = await iota.composeTransaction(
-      outputs: [
-        TransferOutput(
-          address: IotaAddress.random(),
-          value: 0,
-          message: fileData,
-        )
-      ],
-    );
-
-    // Enviar la transacción a la red Tangle
-    final response = await iota.sendTrytes(transaction: transaction);
-
-    // Manejar la respuesta (por ejemplo, imprimir la transacción)
-    print('Transacción enviada: ${response.success}');
-  }*/
 
 
   @override
@@ -124,5 +215,5 @@ class _FilesAppState extends State<HomeScreen>{
     );
   }
 
-}
+}*/
 

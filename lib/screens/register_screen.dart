@@ -88,7 +88,6 @@ class _LoginForm extends StatelessWidget {
             InputDecorations.authTextFormField(
                 labelText: 'Usuario',
                 hintText: 'Usuario',
-                obscureText: true,
                 formProperty: 'user',
                 formValues: formValues,
                 prefixIcon: Icons.supervised_user_circle_outlined),

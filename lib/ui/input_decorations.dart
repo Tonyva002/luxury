@@ -59,17 +59,18 @@ class InputDecorations{
     final IconData? prefixIcon,
     final TextInputType? emailAddress,
     final bool obscureText = false,
-
+    final bool? enabled,
     required final String formProperty,
     required final Map<String, String> formValues,
 }){
 
     return TextFormField(
       autofocus: false,
-      initialValue: "",
+      initialValue: '',
       textCapitalization: TextCapitalization.words,
       keyboardType: emailAddress,
       obscureText: obscureText,
+      enabled: enabled,
       onChanged: (value) => formValues[formProperty] = value,
       validator: (value) {
         if (value == null) return "Requerido";
