@@ -7,7 +7,7 @@ class FileData extends ChangeNotifier {
   final db = HiveDatabase();
 
   // overall list of files
-  List<File> allFiles = [
+  List<Files> allFiles = [
     //default first file
     // File(
     //     id: 'abc',
@@ -22,19 +22,19 @@ class FileData extends ChangeNotifier {
   }
 
   // get files
-  List<File> getAllFiles() {
+  List<Files> getAllFiles() {
     return allFiles;
   }
 
   // add a new file
-  void addNewFile(File file) {
+  void addNewFile(Files file) {
     allFiles.add(file);
     db.saveFiles(allFiles);
     notifyListeners();
   }
 
   //update file
-  void updateFile(File file, String tag, String text) {
+  void updateFile(Files file, String tag, String text) {
     // go thru list of all files
     for (int i = 0; i < allFiles.length; i++) {
       if (allFiles[i].id == file.id) {
@@ -47,7 +47,7 @@ class FileData extends ChangeNotifier {
   }
 
   // delete note
-  void deleteFile(File file) {
+  void deleteFile(Files file) {
     allFiles.remove(file);
     db.saveFiles(allFiles);
     notifyListeners();

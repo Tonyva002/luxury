@@ -1,10 +1,10 @@
-class File {
+class Files {
   String id;
   String tag;
   String text;
   String blockId;
 
-  File(
+  Files(
       {required this.id,
         required this.tag,
         required this.text,

@@ -8,14 +8,14 @@ class HiveDatabase {
   final _myBox = Hive.box('file_database');
 
   // load notes
-  List<File> loadFiles() {
-    List<File> saveFilesFormatted = [];
+  List<Files> loadFiles() {
+    List<Files> saveFilesFormatted = [];
 
     // if there exit notes, return that, otherwise return empty list
     if (_myBox.get("ALL_NOTES") != null) {
       List<dynamic> savedFiles = _myBox.get("ALL_NOTES");
       for (int i = 0; i < savedFiles.length; i++) {
-        File individualFile = File(
+        Files individualFile = Files(
             id: savedFiles[i][0],
             tag: savedFiles[i][1],
             text: savedFiles[i][2],
@@ -29,7 +29,7 @@ class HiveDatabase {
   }
 
   // save notes
-  void saveFiles(List<File> allFiles) {
+  void saveFiles(List<Files> allFiles) {
     List<List<dynamic>> allFilesFormatted = [
       /*
       [

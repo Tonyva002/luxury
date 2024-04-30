@@ -34,14 +34,14 @@ class _HomeScreenState extends State<HomeScreen> {
     String tag = '';
     String text = '';
     String blockId = '';
-    File newFile = File(id: id, tag: tag, text: text, blockId: blockId);
+    Files newFile = Files(id: id, tag: tag, text: text, blockId: blockId);
 
     // Navigate to edit the file
     goToFileScreen(newFile, true);
   }
 
   // method to navigate to file editing
-  void goToFileScreen(File file, bool isNewFile) {
+  void goToFileScreen(Files file, bool isNewFile) {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -51,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   // delete file
-  void deleteFile(File file) {
+  void deleteFile(Files file) {
     Provider.of<FileData>(context, listen: false).deleteFile(file);
   }
 
@@ -133,87 +133,4 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-
-/*class _FilesAppState extends State<HomeScreen>{
-
-  FilePickerResult? result;
-  String? _fileName;
-  PlatformFile? pickefile;
-  bool isLoading = false;
-  File? fileToDisplay;
-
-  void addFile() async{
-    try{
-      setState(() {
-        isLoading = true;
-      });
-
-      result = await FilePicker.platform.pickFiles(
-        type: FileType.any,
-       // allowedExtensions: ['jpg','png', 'pdf'],
-        allowMultiple: false,
-
-      );
-      if(result != null){
-        _fileName = result!.files.first.name;
-        pickefile = result!.files.first;
-        fileToDisplay = File(pickefile!.path.toString());
-
-        print('File name $_fileName');
-        print('file path $fileToDisplay');
-      }
-
-      setState(() {
-        isLoading = false;
-      });
-
-    }catch(e){
-      print(e);
-    }
-
-  }
-
-
-
-  @override
-  Widget build(BuildContext context) {
-
-    final authService = Provider.of<AuthService>(context, listen: false);
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Home'),
-        leading: IconButton(
-          icon: Icon(Icons.login_outlined),
-          onPressed: (){
-            authService.logout(); // Cerrar sesion
-            Navigator.pushReplacementNamed(context, 'login');
-
-          },
-        ),
-      ),
-      body: Container(child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Center(
-            child: isLoading
-                ? CircularProgressIndicator()
-                : TextButton(
-                onPressed: () {
-                  addFile();
-                },
-                child: Text('Add File')),
-          ),
-          if(pickefile != null)
-            SizedBox(
-                height: 300, width: 400, child: Image.file(fileToDisplay!)),
-        ],
-
-      ),
-      ),
-
-    );
-  }
-
-}*/
 
