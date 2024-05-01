@@ -1,7 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:luxury/screens/editing_file_screen.dart';
+import 'package:luxury/screens/file_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 

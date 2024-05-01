@@ -3,7 +3,8 @@ use tokio::runtime::Runtime;
 use anyhow::Result;
 
 pub fn publish_tagged_data_block(tag: String, message: String) -> Result<String> {
-    let node_url: String = String::from("https://api.shimmer.network");
+    //let node_url: String = String::from("https://api.shimmer.network");
+    let node_url: String = String::from("https://explorer.shimmer.network/shimmer");
 
     let rt = Runtime::new().unwrap();
     rt.block_on(async {
