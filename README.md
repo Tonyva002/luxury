@@ -15,6 +15,7 @@ This application allows you to register a user, log in and log out, and also all
 - Flutter
 - Android Studio
 - Firebase
+- Rust
 
   ### Tool needed:
 
