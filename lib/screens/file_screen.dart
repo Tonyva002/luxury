@@ -6,9 +6,9 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:luxury/models/file.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'dart:developer' as dev;
 
 import '../ffi.dart';
 import '../models/models.dart';
@@ -62,28 +62,26 @@ class _EditingFileScreenState extends State<EditingFileScreen> {
       print(e);
     }
   }
-  // add new note
- /* void handleFile(String tag, String text) {
-    // add the new note
-    // with a fake blockId until iota-client is in place
-    Provider.of<FileData>(context, listen: false).addNewFile(Files(
-        id: widget.file.id,
-        tag: tag,
-        text: text,
-        blockId:
-        '0x036a28765f3609f33c4a37b1bf17a67afb6393c04fac48e9c0f3f97885fedaff'));
-    Navigator.pop(context);
-  }*/
+
   // add new file
    Future<void> handleFile(String tag, String text) async {
+  //  dev.debugger();
     try {
+      setState(() {
+        isLoading = true;
+      });
       final receivedBlockId =
           await api.publishTaggedDataBlock( tag: tag, message: text);
-
       storeAndReturnToHomepage(tag, text, receivedBlockId);
+
+      setState(() {
+        isLoading = false;
+      });
+
     } on FfiException catch (e) {
       showSnackBar(e.message);
     }
+
   }
 
   void showSnackBar(String message) {
@@ -93,11 +91,14 @@ class _EditingFileScreenState extends State<EditingFileScreen> {
 
   void storeAndReturnToHomepage(String tag, String text, String blockId) {
     // add the new file
+    // dev.debugger();
     Provider.of<FileData>(context, listen: false).addNewFile(
         Files(id: widget.file.id, tag: tag, text: text, blockId: blockId));
     Navigator.pop(context);
   }
 
+
+  // ver en el navegador
   Future<void> _launchUrl() async {
     final Uri url = Uri.parse(
         'https://explorer.shimmer.network/shimmer/block/${widget.file.blockId}');
@@ -214,6 +215,7 @@ class _EditingFileScreenState extends State<EditingFileScreen> {
                       onPressed: () {
                         bool ok = _formKey.currentState!.saveAndValidate();
                         if (ok) {
+                       //   dev.debugger();
                           handleFile(_formKey.currentState?.fields['tag']?.value,
                               _formKey.currentState?.fields['text']?.value);
                         }
@@ -227,10 +229,11 @@ class _EditingFileScreenState extends State<EditingFileScreen> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
-                      child: const Padding(
+                      child: Padding(
                         padding: EdgeInsets.all(12.0),
-                        child: Text('Send to Tangle'),
+                        child: Text( isLoading ? 'Espere' : 'Send to Tangle'),
                       ),
+
                     ),
                   if (!widget.isNewFile)
                     ElevatedButton(

@@ -8,6 +8,7 @@ import 'dart:async';
 import 'package:meta/meta.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge.dart';
 import 'package:uuid/uuid.dart';
+import 'dart:developer' as dev;
 
 
 
@@ -23,13 +24,14 @@ class RustImpl implements Rust {
   RustImpl.raw(this._platform);
   Future<String> publishTaggedDataBlock(
       {required String tag, required String message, dynamic hint}) {
+   // dev.debugger();
     var arg0 = _platform.api2wire_String(tag);
     var arg1 = _platform.api2wire_String(message);
     return _platform.executeNormal(FlutterRustBridgeTask(
       callFfi: (port_) =>
           _platform.inner.wire_publish_tagged_data_block(port_, arg0, arg1),
       parseSuccessData: _wire2api_String,
-      parseErrorData: _wire2api_u8,
+      parseErrorData: _wire2api_String,
       constMeta: kPublishTaggedDataBlockConstMeta,
       argValues: [tag, message],
       hint: hint,
