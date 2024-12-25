@@ -6,11 +6,11 @@ import 'package:luxury/screens/screen.dart';
 import 'package:luxury/services/services.dart';
 import 'package:provider/provider.dart';
 
-class CheckAuthScreen extends StatelessWidget {
+/*class CheckAuthScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final authService = Provider.of<AuthService>(context, listen: false);
+    final authService = Provider.of<AuthSBervice>(context);
 
     return Scaffold(
       body: Center(
@@ -51,4 +51,4 @@ class CheckAuthScreen extends StatelessWidget {
     );
   }
 
-}
+}*/
